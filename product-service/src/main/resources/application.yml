@@ -1,0 +1,19 @@
+spring:
+    application:
+        name: product-service
+    cache:
+        redis:
+            cache-null-values: false
+            time-to-live: 600000
+        type: redis
+    data:
+        redis:
+            host: localhost
+            lettuce:
+                pool:
+                    max-active: 10
+                    max-idle: 5
+                    max-wait: 2000ms
+                    min-idle: 2
+            port: 6379
+            timeout: 3000ms
