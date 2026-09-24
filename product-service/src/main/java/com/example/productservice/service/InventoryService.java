@@ -22,9 +22,6 @@ public class InventoryService {
     }
 
 
-    // =========================================================================
-    // THAO TÁC ĐỌC — Cache-Aside Read
-    // =========================================================================
 
 
     @Cacheable(
@@ -37,16 +34,16 @@ public class InventoryService {
         // Fail-fast validation — ném exception ngay nếu input không hợp lệ
         validateProductId(productId);
 
-        logger.info("🔍 Cache MISS cho tồn kho '{}' — truy vấn Database", productId);
+        logger.info(" Cache MISS cho tồn kho '{}' — truy vấn Database", productId);
 
         ProductInventory inventory = inventoryRepository.findByProductId(productId);
 
         if (inventory == null) {
-            logger.warn("⚠️ Sản phẩm '{}' không tồn tại trong Database", productId);
+            logger.warn(" Sản phẩm '{}' không tồn tại trong Database", productId);
             return null;
         }
 
-        // Chuyển đổi Entity → DTO trước khi trả về (và cache)
+    
         ProductInventoryDTO dto = new ProductInventoryDTO(
                 inventory.getProductId(),
                 inventory.getQuantity()
@@ -57,9 +54,7 @@ public class InventoryService {
     }
 
 
-    // =========================================================================
-    // THAO TÁC GHI — Cache-Aside Write (Write-Through + Evict)
-    // =========================================================================
+  
 
 
     @CacheEvict(
@@ -67,19 +62,19 @@ public class InventoryService {
             key = "#productId"
     )
     public ProductInventoryDTO updateInventory(String productId, Integer newQuantity) {
-        // ===== BƯỚC 1: Fail-fast Validation =====
+
         validateProductId(productId);
         validateQuantity(newQuantity);
 
         logger.info(" Cập nhật tồn kho '{}': {} đơn vị — Cache sẽ bị evict", productId, newQuantity);
 
-        // ===== BƯỚC 2: Ghi vào Database =====
+     
         ProductInventory updated = inventoryRepository.updateQuantity(productId, newQuantity);
 
-        // ===== BƯỚC 3: Spring tự động evict cache SAU khi method return =====
+      
         logger.info(" Đã cập nhật tồn kho và evict cache cho sản phẩm '{}'", productId);
 
-        // Chuyển Entity → DTO
+      
         return new ProductInventoryDTO(
                 updated.getProductId(),
                 updated.getQuantity()
