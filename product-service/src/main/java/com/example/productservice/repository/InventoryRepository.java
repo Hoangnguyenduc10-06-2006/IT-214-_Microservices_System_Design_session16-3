@@ -48,7 +48,7 @@ public class InventoryRepository {
 
 
     public ProductInventory updateQuantity(String productId, Integer newQuantity) {
-        logger.info("📝 [DB UPDATE] Cập nhật tồn kho sản phẩm '{}' → {} đơn vị", productId, newQuantity);
+        logger.info(" [DB UPDATE] Cập nhật tồn kho sản phẩm '{}' → {} đơn vị", productId, newQuantity);
 
         ProductInventory inventory = database.get(productId);
         if (inventory == null) {
