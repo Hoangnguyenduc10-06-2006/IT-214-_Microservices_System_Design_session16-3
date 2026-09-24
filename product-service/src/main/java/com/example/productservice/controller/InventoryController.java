@@ -30,7 +30,7 @@ public class InventoryController {
     public ResponseEntity<Map<String, Object>> getInventory(
             @PathVariable("productId") String productId) {
 
-        logger.info("📥 [API] GET /api/inventory/{}", productId);
+        logger.info(" [API] GET /api/inventory/{}", productId);
 
         ProductInventoryDTO inventory = inventoryService.getInventory(productId);
 
@@ -52,7 +52,7 @@ public class InventoryController {
             @PathVariable("productId") String productId,
             @RequestParam("newQuantity") Integer newQuantity) {
 
-        logger.info("📤 [API] PUT /api/inventory/{} — newQuantity={}", productId, newQuantity);
+        logger.info(" [API] PUT /api/inventory/{} — newQuantity={}", productId, newQuantity);
 
         ProductInventoryDTO updated = inventoryService.updateInventory(productId, newQuantity);
 
