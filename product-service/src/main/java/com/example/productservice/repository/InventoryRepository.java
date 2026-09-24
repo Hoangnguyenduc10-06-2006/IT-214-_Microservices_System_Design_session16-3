@@ -27,13 +27,13 @@ public class InventoryRepository {
         database.put("AIRPODS_PRO", new ProductInventory("AIRPODS_PRO", "AirPods Pro 2", 300));
         database.put("IPAD_AIR", new ProductInventory("IPAD_AIR", "iPad Air M2", 75));
 
-        logger.info("📦 Đã khởi tạo {} sản phẩm tồn kho trong database giả lập", database.size());
+        logger.info(" Đã khởi tạo {} sản phẩm tồn kho trong database giả lập", database.size());
     }
 
 
 
     public ProductInventory findByProductId(String productId) {
-        logger.info("🗄️ [DB QUERY] Truy vấn tồn kho sản phẩm '{}' từ Database", productId);
+        logger.info(" [DB QUERY] Truy vấn tồn kho sản phẩm '{}' từ Database", productId);
 
         // Giả lập độ trễ database (50ms)
         try {
